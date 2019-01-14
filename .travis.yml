@@ -1,0 +1,11 @@
+sudo: false
+language: c
+addons:
+  apt:
+    packages:
+      - mingw-w64
+
+script:
+  - rm -f cnping cnping.exe
+  - make cnping.exe
+  - make cnping
