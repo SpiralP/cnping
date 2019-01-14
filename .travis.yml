@@ -6,6 +6,22 @@ addons:
       - mingw-w64
 
 script:
-  - rm -f cnping cnping.exe
+  - rm -f cnping.exe cnping
   - make cnping.exe
   - make cnping
+  - sha256sum cnping.exe cnping
+  - file cnping.exe cnping
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "Oq98NX3bmT37lYWAKKdrptWA3pPeQX9fa2xWWb97aq/zlyiURn5iJFliUq3B1uIKFd57fmssA61L59z98vO+JQWfzca4ORx6kBbBvbErY6s44Xow0d082I/IDewE0JlUxSfyaVVXvPKmBRDf67Mvob2lzXZCmb813k1e91553P6ryuHTN3lYJ3mYMv6lIM473d4V7Jn0eB3QYd1tz6cLd/k6Gr45+vDb6GfFrVl9/cxHSielFYOmAu8uAlz3OVvvScOz9mNLjQCdpANhTNBDUjtfTmjvJ1Cx5m2+hnhrp29VoCahF+alCFXdBonkuEaJYVUpkKBQIPuhIKUF3U8JEAdH+rNxuGfuDstzh9txcLgE/bOZr65J37mPEB52TFZPw/aEbFImTRlW+BrIqmdNbR75KKhEG8FEsOxZEkRdXUGNXhpS8RKNF0h3H+aofQX9Gtt36DEoeBNPQeiBofmvtkGrpLQ8vbPO57PzVYiD9+6//udI3hUKUCXxbRoNlFuxuyYeBr6Ms2m6coGY9PcUQlrLSGIbUPra08h6DU79o+ai2MDM+yUIjcQuNbAvMIniMLLHpqcLus0pjQw7CeMDBs51YZ06s15Cxo8amwCTIWqZtVdbXcQVOlqJTRAJvCL3QGZUBV6wUO5krdM4EGt96BHY6efcIiEN5ljNMN71Y9Y="
+  file:
+    - cnping.exe
+    - cnping
+  skip_cleanup: true
+  on:
+    branch: master
+branches:
+  only:
+    - master
