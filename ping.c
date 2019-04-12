@@ -124,9 +124,11 @@ void listener() {
     if (buf[20] != 0)
       continue;  // Make sure ping response.
     if (buf[9] != 1)
-      continue;  // ICMP
+      continue;  // type is ICMP
     if (addr.sin_addr.s_addr != psaddr.sin_addr.s_addr)
       continue;
+    if (((buf[24] << 8) | (buf[25] << 0)) != pid)
+      continue;  // ICMP id field
 
     if (bytes > 0)
       display(buf + 28, bytes - 28);
@@ -245,7 +247,7 @@ void do_pinger(const char* strhost) {
   memset(&psaddr, 0, sizeof(psaddr));
   psaddr.sin_family = hname->h_addrtype;
   psaddr.sin_port = 0;
-  psaddr.sin_addr.s_addr = *(long*)hname->h_addr;
+  psaddr.sin_addr.s_addr = *(long*)hname->h_addr_list[0];
   ping(&psaddr);
 }
 
