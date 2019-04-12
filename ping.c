@@ -127,7 +127,7 @@ void listener() {
       continue;  // type is ICMP
     if (addr.sin_addr.s_addr != psaddr.sin_addr.s_addr)
       continue;
-    if (((buf[24] << 8) | (buf[25] << 0)) != pid)
+    if (((struct icmphdr*)(buf + 20))->un.echo.id != pid)
       continue;  // ICMP id field
 
     if (bytes > 0)
